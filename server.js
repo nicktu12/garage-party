@@ -1,5 +1,8 @@
+/* eslint-disable no-path-concat, no-console */
+
 const express = require('express');
 const bodyParser = require('body-parser');
+
 const app = express();
 
 const environment = process.env.NODE_ENV || 'development';
@@ -11,9 +14,9 @@ const checkParams = require('./utils/checkParams');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(`${__dirname}/public`));
 
-app.set('port', process.env.NODE_ENV || 3000)
+app.set('port', process.env.NODE_ENV || 3000);
 
 app.listen(app.get('port'), () => {
   console.log(`Server is running on ${app.get('port')}`);
@@ -21,10 +24,10 @@ app.listen(app.get('port'), () => {
 
 app.get('/api/v1/garage_items', (request, response) => {
   database('garage_items').select()
-    .then(garageItems => {
-      response.status(200).json(garageItems)
+    .then((garageItems) => {
+      response.status(200).json(garageItems);
     })
-    .catch(error => {
+    .catch((error) => {
       response.status(500).json({ error });
     });
 });
@@ -35,12 +38,12 @@ app.post('/api/v1/garage_items', (request, response) => {
   checkParams(['item_name', 'reason', 'cleanliness'], item, response);
 
   database('garage_items').insert(item, 'id')
-    .then(id => {
+    .then((id) => {
       response.status(201).json({ id });
     })
-    .catch(error => {
+    .catch((error) => {
       response.status(500).json({ error });
-    })
+    });
 });
 
 app.patch('/api/v1/garage_items/:id', (request, response) => {
@@ -54,9 +57,9 @@ app.patch('/api/v1/garage_items/:id', (request, response) => {
       }
       response.sendStatus(204);
     })
-    .catch(error => {
+    .catch((error) => {
       response.status(500).json({ error });
-    })
+    });
 });
 
 module.exports = app;

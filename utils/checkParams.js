@@ -1,8 +1,10 @@
-const checkParams = (array, body, response)  => {
+/* eslint-disable consistent-return, no-restricted-syntax, prefer-const */
+
+const checkParams = (array, body, response) => {
   for (let requiredParameter of array) {
     if (!body[requiredParameter]) {
       return response.status(422).json({
-        error: `You are missing the ${requiredParameter} property.`
+        error: `You are missing the ${requiredParameter} property.`,
       });
     }
   }

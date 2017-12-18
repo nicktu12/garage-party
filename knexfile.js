@@ -6,12 +6,12 @@ module.exports = {
     client: 'pg',
     connection: 'postgres://localhost/garage',
     migrations: {
-      directory: './db/migrations'
+      directory: './db/migrations',
     },
     seeds: {
-      directory: './db/seeds/dev'
+      directory: './db/seeds/dev',
     },
-    useNullAsDefault: true
+    useNullAsDefault: true,
   },
 
 };
