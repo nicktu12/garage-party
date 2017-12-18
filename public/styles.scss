@@ -11,6 +11,29 @@
   margin: auto;
 }
 
+.garage-container {
+  position: relative;
+  width: 80vw;
+  height: 60vh;
+  margin: auto;
+}
+
+.garage, .garage-door {
+  position: absolute;
+  width: 80vw;
+  height: 60vh;
+  margin: auto;
+}
+
+.garage {
+  z-index: 0;
+}
+
+.garage-door {
+  background-color: red;
+  z-index: 1;
+}
+
 .item-info-hidden .item-info {
   display: none;
 }

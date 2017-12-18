@@ -90,3 +90,6 @@ const newItem = (event) => {
 };
 
 $('.submit-item').on('click', newItem);
+$('.garage-door-button').on('click', () => {
+  $('.garage-door').slideToggle();
+});
