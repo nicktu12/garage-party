@@ -38,7 +38,7 @@ app.post('/api/v1/garage_items', (request, response) => {
       response.status(201).json({ id });
     })
     .catch((error) => {
-      response.status(500).json({ error });
+      response.status(422).json({ error });
     });
 });
 
