@@ -57,9 +57,4 @@ app.patch('/api/v1/garage_items/:id', (request, response) => {
     });
 });
 
-app.listen(app.get('port'), () => {
-// eslint-disable-next-line
-  console.log(`Server is running on ${app.get('port')}.`);
-});
-
 module.exports = app;
