@@ -30,11 +30,17 @@ app.get('/api/v1/garage_items', (request, response) => {
 });
 
 app.post('/api/v1/garage_items', (request, response) => {
-  const items = request.body;
+  const item = request.body;
 
-  checkParams(['item_name', 'reason', 'cleanliness']);
+  checkParams(['item_name', 'reason', 'cleanliness'], item, response);
 
-
+  database('garage_items').insert(item, 'id')
+    .then(id => {
+      response.status(201).json({ id });
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    })
 });
 
 module.exports = app;
