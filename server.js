@@ -43,4 +43,20 @@ app.post('/api/v1/garage_items', (request, response) => {
     })
 });
 
+app.patch('/api/v1/garage_items/:id', (request, response) => {
+  const { cleanliness } = request.body;
+  const { id } = request.params;
+
+  database('garage_items').where({ id }).update({ cleanliness })
+    .then((update) => {
+      if (!update) {
+        response.sendStatus(404);
+      }
+      response.sendStatus(204);
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    })
+});
+
 module.exports = app;
