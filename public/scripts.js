@@ -26,7 +26,7 @@ const updateCleanliness = (id, selected) => {
 
 const appendItem = (item) => {
   const appendableItem =
-    `<div class="${item.id}">
+    `<div class="${item.id}-appended-item item-info-hidden">
       <h3>${item.item_name}</h3>
       <div class="item-info">
         <p>${item.reason}</p>
@@ -41,6 +41,9 @@ const appendItem = (item) => {
   $('.garage').append(appendableItem);
   $(`.appended-selector-${item.id}`).on('change', () => {
     updateCleanliness(item.id, $(`.appended-selector-${item.id}`).val());
+  });
+  $(`.${item.id}-appended-item`).on('click', () => {
+    $(`.${item.id}-appended-item`).toggleClass('item-info-hidden');
   });
 };
 
@@ -85,6 +88,5 @@ const newItem = (event) => {
     })
     .catch((error) => { throw error; });
 };
-
 
 $('.submit-item').on('click', newItem);
