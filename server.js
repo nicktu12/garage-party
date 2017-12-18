@@ -6,6 +6,8 @@ const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 
+const checkParams = require('./utils/checkParams');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -25,6 +27,14 @@ app.get('/api/v1/garage_items', (request, response) => {
     .catch(error => {
       response.status(500).json({ error });
     });
+});
+
+app.post('/api/v1/garage_items', (request, response) => {
+  const items = request.body;
+
+  checkParams(['item_name', 'reason', 'cleanliness']);
+
+
 });
 
 module.exports = app;
