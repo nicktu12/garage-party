@@ -1,4 +1,4 @@
-/* eslint-disable no-undef, camelcase, arrow-body-style, consistent-return */
+/* eslint-disable no-undef, camelcase, arrow-body-style, consistent-return, no-plusplus */
 
 const optionFinder = (selectedOption) => {
   const possibleOptions = ['sparkling', 'dusty', 'rancid'];
@@ -47,11 +47,25 @@ const appendItem = (item) => {
   });
 };
 
+const countItems = (items, countedProp) => {
+  let counter = 0;
+  for (let i = 0; i < items.length; i++) {
+    if (items[i].cleanliness === countedProp) {
+      counter++;
+    }
+  }
+  return counter;
+};
+
 const fetchItems = () => {
   $('.garage').html('');
   fetch('/api/v1/garage_items')
     .then(response => response.json())
     .then((items) => {
+      $('.sparkling-total').text(countItems(items, 'sparkling'));
+      $('.dusty-total').text(countItems(items, 'dusty'));
+      $('.rancid-total').text(countItems(items, 'rancid'));
+      $('.garage-total').text(items.length);
       items.forEach((item) => {
         appendItem(item);
       });
@@ -59,6 +73,50 @@ const fetchItems = () => {
 };
 
 fetchItems();
+
+const sortItems = () => {
+  $('.garage').html('');
+  fetch('/api/v1/garage_items')
+    .then(response => response.json())
+    .then((items) => {
+      const sorted = items.sort((a, b) => {
+        const nameA = a.item_name.toLowerCase();
+        const nameB = b.item_name.toLowerCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+      sorted.forEach((item) => {
+        appendItem(item);
+      });
+    });
+};
+
+const reverseSortItems = () => {
+  $('.garage').html('');
+  fetch('/api/v1/garage_items')
+    .then(response => response.json())
+    .then((items) => {
+      const sorted = items.sort((a, b) => {
+        const nameA = a.item_name.toLowerCase();
+        const nameB = b.item_name.toLowerCase();
+        if (nameA > nameB) {
+          return -1;
+        }
+        if (nameA < nameB) {
+          return 1;
+        }
+        return 0;
+      });
+      sorted.forEach((item) => {
+        appendItem(item);
+      });
+    });
+};
 
 const newItem = (event) => {
   event.preventDefault();
@@ -93,3 +151,5 @@ $('.submit-item').on('click', newItem);
 $('.garage-door-button').on('click', () => {
   $('.garage-door').slideToggle();
 });
+$('.atoz-button').on('click', sortItems);
+$('.ztoa-button').on('click', reverseSortItems);
