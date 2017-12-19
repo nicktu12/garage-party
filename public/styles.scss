@@ -31,6 +31,14 @@ h1 {
   margin: auto;
 }
 
+.add-item input {
+  padding: 5px;
+}
+
+.garage div h3 {
+  text-decoration: underline;
+}
+
 .garage-container {
   position: relative;
   width: 80vw;
@@ -53,6 +61,7 @@ h1 {
 
 .garage-stats {
   padding-top: 45vh;
+  text-align: center;
 }
 
 .garage-door {
