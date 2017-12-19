@@ -1,7 +1,24 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  background-color: #282427;
+  font-family: sans-serif;
+  color: #fefefe; }
+
+h1 {
+  text-align: center; }
+
+.buttons-div {
+  display: flex;
+  justify-content: space-around;
+  margin: 25px; }
+
+.buttons-div button {
+  padding: 10px;
+  background-color: #282427;
+  color: #FEFEFE;
+  border: 2px solid #fefefe; }
 
 .add-item {
   display: flex;
@@ -22,10 +39,17 @@
   margin: auto; }
 
 .garage {
-  z-index: 0; }
+  z-index: 0;
+  height: 45vh;
+  overflow: scroll; }
+
+.garage-stats {
+  padding-top: 45vh; }
 
 .garage-door {
-  background-color: red;
+  background-image: url("assets/garage-door.gif");
+  background-size: cover;
+  background-repeat: no-repeat;
   z-index: 1; }
 
 .item-info-hidden .item-info {
