@@ -17,11 +17,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('port', process.env.NODE_ENV || 3000);
 app.use(express.static(`${__dirname}/public`));
 
-// eslint-disable-next-line
-app.get('/', (request, response) => {
-  app.use(express.static(`${__dirname}/public`));
-});
-
 app.get('/api/v1/garage_items', (request, response) => {
   database('garage_items').select()
     .then((garageItems) => {
