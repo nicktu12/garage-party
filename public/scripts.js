@@ -27,7 +27,7 @@ const updateCleanliness = (id, selected) => {
 const appendItem = (item) => {
   const appendableItem =
     `<div class="${item.id}-appended-item item-info-hidden">
-      <h3>${item.item_name}</h3>
+      <h3 class="${item.id}-item-name">${item.item_name}</h3>
       <div class="item-info">
         <p>${item.reason}</p>
         <select class="appended-selector-${item.id}">
@@ -42,7 +42,7 @@ const appendItem = (item) => {
   $(`.appended-selector-${item.id}`).on('change', () => {
     updateCleanliness(item.id, $(`.appended-selector-${item.id}`).val());
   });
-  $(`.${item.id}-appended-item`).on('click', () => {
+  $(`.${item.id}-item-name`).on('click', () => {
     $(`.${item.id}-appended-item`).toggleClass('item-info-hidden');
   });
 };
