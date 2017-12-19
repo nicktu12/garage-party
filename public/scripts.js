@@ -1,4 +1,4 @@
-/* eslint-disable no-undef, camelcase, arrow-body-style, consistent-return, no-plusplus */
+/* eslint-disable no-undef, camelcase, arrow-body-style, consistent-return, no-plusplus, no-use-before-define, max-len */
 
 const optionFinder = (selectedOption) => {
   const possibleOptions = ['sparkling', 'dusty', 'rancid'];
@@ -24,29 +24,6 @@ const updateCleanliness = (id, selected) => {
     .catch((error) => { throw error; });
 };
 
-const appendItem = (item) => {
-  const appendableItem =
-    `<div class="${item.id}-appended-item item-info-hidden">
-      <h3 class="${item.id}-item-name">${item.item_name}</h3>
-      <div class="item-info">
-        <p>${item.reason}</p>
-        <select class="appended-selector-${item.id}">
-          <option selected value=${item.cleanliness}>${item.cleanliness}</option>
-          <option>${optionFinder(item.cleanliness)[0]}</option>
-          <option>${optionFinder(item.cleanliness)[1]}</option>
-        </select>
-      </div>
-    </div>`;
-
-  $('.garage').append(appendableItem);
-  $(`.appended-selector-${item.id}`).on('change', () => {
-    updateCleanliness(item.id, $(`.appended-selector-${item.id}`).val());
-  });
-  $(`.${item.id}-item-name`).on('click', () => {
-    $(`.${item.id}-appended-item`).toggleClass('item-info-hidden');
-  });
-};
-
 const countItems = (items, countedProp) => {
   let counter = 0;
   for (let i = 0; i < items.length; i++) {
@@ -70,6 +47,30 @@ const fetchItems = () => {
         appendItem(item);
       });
     });
+};
+
+const appendItem = (item) => {
+  const appendableItem =
+    `<div class="${item.id}-appended-item item-info-hidden">
+      <h3 class="${item.id}-item-name">${item.item_name}</h3>
+      <div class="item-info">
+        <p>${item.reason}</p>
+        <select class="appended-selector-${item.id}">
+          <option selected value=${item.cleanliness}>${item.cleanliness}</option>
+          <option>${optionFinder(item.cleanliness)[0]}</option>
+          <option>${optionFinder(item.cleanliness)[1]}</option>
+        </select>
+      </div>
+    </div>`;
+
+  $('.garage').append(appendableItem);
+  $(`.appended-selector-${item.id}`).on('change', () => {
+    updateCleanliness(item.id, $(`.appended-selector-${item.id}`).val());
+    fetchItems();
+  });
+  $(`.${item.id}-item-name`).on('click', () => {
+    $(`.${item.id}-appended-item`).toggleClass('item-info-hidden');
+  });
 };
 
 fetchItems();
