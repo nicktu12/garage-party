@@ -100,7 +100,7 @@ describe('API routes', () => {
         })
     });
 
-    it('should not add a new item if required parameter is missing', () => {
+    it('should not add a new item if required parameter is missing', (done) => {
       chai.request(server)
         .post('/api/v1/garage_items')
         .send({
@@ -112,4 +112,32 @@ describe('API routes', () => {
         });
     });
   });
+
+  describe('PATCH /api/v1/garage_items/:id', () => {
+    it('should update a record based on id', (done) => {
+      chai.request(server)
+        .patch('/api/v1/garage_items/1')
+        .send({ cleanliness: 'rancid' })
+        .end((error, response) => {
+          response.should.have.status(204);
+          chai.request(server)
+            .get('/api/v1/garage_items')
+            .end((error, response) => {
+              response.should.have.status(200);
+              response.body[2].cleanliness.should.equal('rancid');
+              done();
+            })
+        })
+    })
+
+    it('should not update a record if the record does not exist', (done) => {
+      chai.request(server)
+        .patch('/api/v1/garage_items/12')
+        .send({ cleanliness: 'rancid' })
+        .end((error, response) => {
+          response.should.have.status(404)
+          done();
+        })
+    })
+  })
 });
